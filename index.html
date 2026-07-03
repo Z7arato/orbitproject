@@ -1,19 +1,19 @@
 <!DOCTYPE html>
-
-<html class="dark" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Orbit | Explore the Cosmos</title>
-<!-- Google Fonts -->
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Inter:wght@300;400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
-<!-- Material Symbols -->
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<!-- Tailwind CSS -->
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<!-- ScrollReveal -->
-<script src="https://unpkg.com/scrollreveal"></script>
-<script id="tailwind-config">
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Orbit | Explore the Cosmos</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Inter:wght@300;400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+    
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    
+    <script src="https://unpkg.com/scrollreveal"></script>
+    
+    <script id="tailwind-config">
       tailwind.config = {
         darkMode: "class",
         theme: {
@@ -103,291 +103,272 @@
         },
       }
     </script>
-<link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css">
 </head>
-<body class="font-body-md text-body-md custom-scrollbar">
-<!-- Welcome Modal -->
-<div class="fixed inset-0 z-[100] flex items-center justify-center bg-background/80 backdrop-blur-md hidden" id="welcome-modal">
-<div class="glass p-8 rounded-xl max-w-md w-full mx-4 text-center border-primary/20 shadow-2xl">
-<h2 class="font-headline-md text-headline-md text-primary mb-4">Welcome to Orbit</h2>
-<p class="font-body-md text-on-surface-variant mb-8">Explore the Future of Space Technology and the vastness of the cosmos through our high-fidelity mission tracking system.</p>
-<button class="w-full bg-primary-container text-on-primary-container py-3 rounded-lg font-bold hover:scale-[1.02] transition-transform active:scale-95 glow-primary" id="close-modal">
-                Accept
-            </button>
-</div>
-</div>
-<!-- Telemetry Modal -->
-<div class="fixed inset-0 z-[100] flex items-center justify-center bg-background/80 backdrop-blur-md hidden p-4" id="telemetry-modal">
-<div class="glass p-8 rounded-xl max-w-lg w-full mx-4 border-primary/20 shadow-2xl max-h-[85vh] overflow-y-auto custom-scrollbar">
-<div class="flex justify-between items-start mb-6">
-<h2 class="font-headline-md text-headline-md text-primary" id="telemetry-title">Rocket Telemetry</h2>
-<button class="text-on-surface-variant hover:text-primary transition-colors" id="close-telemetry">
-<span class="material-symbols-outlined text-3xl">close</span>
-</button>
-</div>
-<div id="telemetry-content">
-<!-- Populated by app.js -->
-</div>
-</div>
-</div>
-<!-- Header / TopNavBar -->
-<header class="fixed top-0 w-full z-50 transition-all duration-500 border-b border-primary/10" id="top-nav">
-<div class="flex justify-between items-center px-gutter py-4 max-w-container-max mx-auto">
-<div class="flex items-center gap-8">
-<a class="font-headline-md text-headline-md font-bold tracking-tighter text-primary dark:text-primary-fixed" href="#">Orbit</a>
-<!-- Desktop Nav -->
-<nav class="hidden lg:flex items-center gap-6">
-<a class="nav-link text-on-surface-variant hover:text-primary transition-colors font-body-md pb-1 border-b-2 border-transparent" data-nav-link href="#hero">Home</a>
-<a class="nav-link text-on-surface-variant hover:text-primary transition-colors font-body-md pb-1 border-b-2 border-transparent" data-nav-link href="#missions">Missions</a>
-<a class="nav-link text-on-surface-variant hover:text-primary transition-colors font-body-md pb-1 border-b-2 border-transparent" data-nav-link href="#rockets">Rockets</a>
-<a class="nav-link text-on-surface-variant hover:text-primary transition-colors font-body-md pb-1 border-b-2 border-transparent" data-nav-link href="#tech">Technology</a>
-</nav>
-</div>
-<div class="flex items-center gap-4">
-<button class="hidden md:block bg-primary-container text-on-primary-container px-6 py-2 rounded-full font-bold hover:scale-105 transition-all duration-300 glow-primary active:scale-95" id="launch-portal-btn">
-                    Launch Portal
-                </button>
-<button class="lg:hidden text-primary" id="mobile-menu-toggle">
-<span class="material-symbols-outlined text-3xl">menu</span>
-</button>
-</div>
-</div>
-</header>
-<!-- Mobile Menu (kept outside <header> so it isn't nested inside another
-     backdrop-blur element — nested backdrop-filter causes a transparent
-     rendering bug on scroll in mobile Safari/Chrome) -->
-<div class="lg:hidden fixed inset-0 translate-x-full transition-transform duration-300 z-40" id="mobile-menu" style="top:72px; background:#10131a;">
-<nav class="flex flex-col items-center gap-8 py-12">
-<a class="nav-link-mobile text-2xl font-headline-md" data-nav-link href="#hero">Home</a>
-<a class="nav-link-mobile text-2xl font-headline-md" data-nav-link href="#missions">Missions</a>
-<a class="nav-link-mobile text-2xl font-headline-md" data-nav-link href="#rockets">Rockets</a>
-<a class="nav-link-mobile text-2xl font-headline-md" data-nav-link href="#tech">Technology</a>
-<button class="mt-4 bg-primary-container text-on-primary-container px-10 py-4 rounded-full font-bold text-xl" id="launch-portal-btn-mobile">
-                    Launch Portal
-                </button>
-</nav>
-</div>
-<main>
-<!-- Hero Section -->
-<section class="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden" id="hero">
-<!-- Animated Background Placeholder -->
+<body class="font-body-md text-body-md bg-background text-on-background custom-scrollbar overflow-x-hidden">
 
-<div class="absolute inset-0 z-0">
-<div class="w-full h-full bg-cover bg-center opacity-30" data-alt="A cinematic cinematic wide shot of a glowing distant galaxy with swirling nebulas in deep blues, cyans, and magentas. The scene is filled with sharp, bright stars and a sense of vast cosmic silence. High-contrast lighting highlights the crystalline dust clouds against the deep black void of space, creating a sophisticated and adventurous mood for a space exploration brand." style="background-image: url('assets/images/hero-nebula.jpg')"></div>
-<div class="absolute inset-0 bg-gradient-to-b from-background/0 via-background/40 to-background"></div>
-</div>
-<div class="relative z-10 max-w-container-max mx-auto px-gutter text-center">
-<h1 class="font-display-lg text-display-lg md:text-display-lg text-primary mb-6 neon-text-primary leading-tight">
+    <header class="fixed top-0 w-full z-50 transition-all duration-500 border-b border-primary/10" id="top-nav">
+        <div class="flex justify-between items-center px-gutter py-4 max-w-container-max mx-auto">
+            <div class="flex items-center gap-8">
+                <a class="font-headline-md text-headline-md font-bold tracking-tighter text-primary dark:text-primary-fixed" href="#">Orbit</a>
+                <nav class="hidden lg:flex items-center gap-6">
+                    <a class="nav-link text-on-surface-variant hover:text-primary transition-colors font-body-md pb-1 border-b-2 border-transparent" data-nav-link href="#hero">Home</a>
+                    <a class="nav-link text-on-surface-variant hover:text-primary transition-colors font-body-md pb-1 border-b-2 border-transparent" data-nav-link href="#missions">Missions</a>
+                    <a class="nav-link text-on-surface-variant hover:text-primary transition-colors font-body-md pb-1 border-b-2 border-transparent" data-nav-link href="#rockets">Rockets</a>
+                    <a class="nav-link text-on-surface-variant hover:text-primary transition-colors font-body-md pb-1 border-b-2 border-transparent" data-nav-link href="#tech">Technology</a>
+                </nav>
+            </div>
+            <div class="flex items-center gap-4">
+                <button class="hidden md:block bg-primary-container text-on-primary-container px-6 py-2 rounded-full font-bold hover:scale-105 transition-all duration-300 glow-primary active:scale-95" id="launch-portal-btn">
+                    Launch Portal
+                </button>
+                <button class="lg:hidden text-primary" id="mobile-menu-toggle">
+                    <span class="material-symbols-outlined text-3xl">menu</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div class="lg:hidden fixed inset-0 translate-x-full transition-transform duration-300 z-40" id="mobile-menu" style="top:72px; background:#10131a;">
+        <nav class="flex flex-col items-center gap-8 py-12">
+            <a class="nav-link-mobile text-2xl font-headline-md" data-nav-link href="#hero">Home</a>
+            <a class="nav-link-mobile text-2xl font-headline-md" data-nav-link href="#missions">Missions</a>
+            <a class="nav-link-mobile text-2xl font-headline-md" data-nav-link href="#rockets">Rockets</a>
+            <a class="nav-link-mobile text-2xl font-headline-md" data-nav-link href="#tech">Technology</a>
+            <button class="mt-4 bg-primary-container text-on-primary-container px-10 py-4 rounded-full font-bold text-xl" id="launch-portal-btn-mobile">
+                Launch Portal
+            </button>
+        </nav>
+    </div>
+
+    <main>
+        <section class="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden" id="hero">
+            <div class="absolute inset-0 z-0">
+                <div class="w-full h-full bg-cover bg-center opacity-30" data-alt="A cinematic wide shot of a glowing distant galaxy with swirling nebulas." style="background-image: url('assets/images/hero-nebula.jpg')"></div>
+                <div class="absolute inset-0 bg-gradient-to-b from-background/0 via-background/40 to-background"></div>
+            </div>
+            <div class="relative z-10 max-w-container-max mx-auto px-gutter text-center">
+                <h1 class="font-display-lg text-display-lg md:text-display-lg text-primary mb-6 neon-text-primary leading-tight">
                     Explore the <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary-container to-secondary">Cosmos</span>
-</h1>
-<p class="max-w-2xl mx-auto font-body-lg text-body-lg text-on-surface-variant mb-10">
+                </h1>
+                <p class="max-w-2xl mx-auto font-body-lg text-body-lg text-on-surface-variant mb-10">
                     Orbit is your gateway to the next frontier. Witness the engineering marvels and legendary journeys that bridge the gap between Earth and the stars.
                 </p>
-<div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-<button class="w-full sm:w-auto bg-primary-container text-on-primary-container px-10 py-4 rounded-full font-bold text-lg hover:scale-105 transition-all glow-primary" id="start-journey-btn">
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                    <button class="w-full sm:w-auto bg-primary-container text-on-primary-container px-10 py-4 rounded-full font-bold text-lg hover:scale-105 transition-all glow-primary" id="start-journey-btn">
                         Start Journey
                     </button>
-<button class="w-full sm:w-auto border border-primary/40 px-10 py-4 rounded-full font-bold text-lg text-primary backdrop-blur-sm hover:bg-primary/5 transition-all" id="view-missions-btn">
+                    <button class="w-full sm:w-auto border border-primary/40 px-10 py-4 rounded-full font-bold text-lg text-primary backdrop-blur-sm hover:bg-primary/5 transition-all" id="view-missions-btn">
                         View Missions
                     </button>
-</div>
-</div>
-<!-- Scroll Indicator -->
-<div class="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce">
-<span class="material-symbols-outlined text-primary text-3xl opacity-50">keyboard_double_arrow_down</span>
-</div>
-</section>
-<!-- Statistics Section -->
-<section class="py-12 relative z-10 bg-surface-container-lowest" id="stats">
-<div class="max-w-container-max mx-auto px-gutter">
-<div class="grid grid-cols-2 md:grid-cols-4 gap-8">
-<div class="text-center group">
-<div class="font-headline-lg text-headline-lg text-primary-container group-hover:scale-110 transition-transform duration-500">242</div>
-<div class="font-label-mono text-label-mono text-on-surface-variant uppercase tracking-widest">Total Launches</div>
-</div>
-<div class="text-center group">
-<div class="font-headline-lg text-headline-lg text-primary-container group-hover:scale-110 transition-transform duration-500">198</div>
-<div class="font-label-mono text-label-mono text-on-surface-variant uppercase tracking-widest">Total Landings</div>
-</div>
-<div class="text-center group">
-<div class="font-headline-lg text-headline-lg text-primary-container group-hover:scale-110 transition-transform duration-500">174</div>
-<div class="font-label-mono text-label-mono text-on-surface-variant uppercase tracking-widest">Total Reuses</div>
-</div>
-<div class="text-center group">
-<div class="font-headline-lg text-headline-lg text-primary-container group-hover:scale-110 transition-transform duration-500">10+</div>
-<div class="font-label-mono text-label-mono text-on-surface-variant uppercase tracking-widest">Active Missions</div>
-</div>
-</div>
-</div>
-</section>
-<!-- Featured Missions (Bento Grid Style) -->
-<section class="py-24 relative bg-background" id="missions">
-<div class="max-w-container-max mx-auto px-gutter">
-<div class="mb-16">
-<h2 class="font-headline-lg text-headline-lg text-primary mb-4">Featured Missions</h2>
-<div class="w-20 h-1 bg-primary-container rounded-full"></div>
-</div>
-<div class="grid grid-cols-1 md:grid-cols-12 gap-6 h-auto md:h-[600px]">
-<!-- Primary Mission Card -->
-<div class="md:col-span-8 group relative rounded-2xl overflow-hidden glass border-primary/20 cursor-pointer">
-<div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110" data-alt="A majestic close-up of a futuristic spacecraft orbiting a glowing blue Earth at sunset. Golden sunlight glints off its metallic surface while the thin blue line of the atmosphere separates the planet from the deep darkness of space. The aesthetic is hyper-realistic and high-contrast, emphasizing engineering precision and the epic scale of orbital flight." style="background-image: url('assets/images/mission-artemis.jpg')"></div>
-<div class="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent opacity-80"></div>
-<div class="absolute bottom-0 left-0 p-8 w-full">
-<span class="inline-block px-3 py-1 rounded-full bg-primary/20 text-primary text-xs font-bold mb-4 backdrop-blur-md border border-primary/30">LATEST MISSION</span>
-<h3 class="font-headline-md text-headline-md text-white mb-2">Artemis III: Lunar Return</h3>
-<p class="text-on-surface-variant max-w-lg">Sending humans back to the lunar surface for the first time in over 50 years to establish a long-term presence.</p>
-</div>
-</div>
-<!-- Secondary Mission Cards -->
-<div class="md:col-span-4 flex flex-col gap-6">
-<div class="h-1/2 group relative rounded-2xl overflow-hidden glass border-primary/20 cursor-pointer">
-<div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110" data-alt="A telescope view of a deep-space probe approaching the red planet Mars. The rugged, dusty surface of Mars is visible below in high detail, with craters and mountains under a thin orange haze. The scene is lit by harsh, direct sunlight, creating long shadows and a sense of cold, atmospheric exploration." style="background-image: url('assets/images/mission-mars.jpg')"></div>
-<div class="absolute inset-0 bg-gradient-to-t from-background/90 to-transparent"></div>
-<div class="absolute bottom-0 left-0 p-6">
-<h3 class="font-headline-md text-headline-md text-sm text-white font-bold mb-1">Mars Surveyor 2</h3>
-<p class="text-on-surface-variant text-xs">High-res orbital mapping of the Jezero Crater.</p>
-</div>
-</div>
-<div class="h-1/2 group relative rounded-2xl overflow-hidden glass border-primary/20 cursor-pointer">
-<div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110" data-alt="A sleek, modern space station module reflecting bright white light, positioned against the pitch-black backdrop of deep space with distant star clusters visible. The station shows intricate docking ports and solar arrays. The atmosphere is one of technological triumph and silent human endurance among the stars." style="background-image: url('assets/images/mission-station.jpg')"></div>
-<div class="absolute inset-0 bg-gradient-to-t from-background/90 to-transparent"></div>
-<div class="absolute bottom-0 left-0 p-6">
-<h3 class="font-headline-md text-headline-md text-sm text-white font-bold mb-1">Station Alpha Resupply</h3>
-<p class="text-on-surface-variant text-xs">Autonomous cargo docking and crew rotations.</p>
-</div>
-</div>
-</div>
-</div>
-</div>
-</section>
-<!-- Rockets Catalog Section -->
-<section class="py-24 bg-surface-container-low" id="rockets">
-<div class="max-w-container-max mx-auto px-gutter">
-<div class="mb-16">
-<h2 class="font-headline-lg text-headline-lg text-primary mb-4">Rockets Catalog</h2>
-<p class="text-on-surface-variant max-w-xl">Explore the heavy-lift vehicles and versatile launchers currently powering the next generation of space travel.</p>
-</div>
-<!-- Error / fallback banner (hidden unless the live request fails) -->
-<div class="hidden text-center mb-6" id="rockets-loading"></div>
-<!-- Rockets Grid (populated with skeleton placeholder cards first, then swapped for real cards) -->
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="rockets-grid">
-<!-- Cards will be injected here -->
-</div>
-</div>
-</section>
-<!-- Space Technology Section -->
-<section class="py-24 relative overflow-hidden" id="tech">
-<div class="absolute top-0 right-0 w-1/3 h-full bg-primary/5 blur-[120px] rounded-full -translate-y-1/2 translate-x-1/2"></div>
-<div class="max-w-container-max mx-auto px-gutter">
-<div class="text-center mb-16">
-<h2 class="font-headline-lg text-headline-lg text-primary mb-4">Core Technology</h2>
-<p class="text-on-surface-variant max-w-2xl mx-auto">Propulsion and habitat systems designed for extreme endurance and safety in the harshest environments known to man.</p>
-</div>
-<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-<!-- Tech Card 1 -->
-<div class="glass p-8 rounded-2xl border-primary/10 hover:border-primary/40 transition-all duration-500 group">
-<div class="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mb-6 group-hover:bg-primary-container group-hover:text-on-primary-container transition-all duration-500">
-<span class="material-symbols-outlined text-3xl">phonelink_lock</span>
-</div>
-<h3 class="font-headline-md text-headline-md text-xl text-white mb-4">Ion Propulsion</h3>
-<p class="text-on-surface-variant mb-6">High-efficiency electric propulsion systems for deep-space missions where fuel weight is a critical constraint.</p>
-<ul class="space-y-3">
-<li class="flex items-center gap-2 text-sm text-primary-container">
-<span class="material-symbols-outlined text-sm">check_circle</span>
-                                90% higher fuel efficiency
+                </div>
+            </div>
+            <div class="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce">
+                <span class="material-symbols-outlined text-primary text-3xl opacity-50">keyboard_double_arrow_down</span>
+            </div>
+        </section>
+
+        <section class="py-12 relative z-10 bg-surface-container-lowest" id="stats">
+            <div class="max-w-container-max mx-auto px-gutter">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+                    <div class="text-center group">
+                        <div class="font-headline-lg text-headline-lg text-primary-container group-hover:scale-110 transition-transform duration-500">242</div>
+                        <div class="font-label-mono text-label-mono text-on-surface-variant uppercase tracking-widest">Total Launches</div>
+                    </div>
+                    <div class="text-center group">
+                        <div class="font-headline-lg text-headline-lg text-primary-container group-hover:scale-110 transition-transform duration-500">198</div>
+                        <div class="font-label-mono text-label-mono text-on-surface-variant uppercase tracking-widest">Total Landings</div>
+                    </div>
+                    <div class="text-center group">
+                        <div class="font-headline-lg text-headline-lg text-primary-container group-hover:scale-110 transition-transform duration-500">174</div>
+                        <div class="font-label-mono text-label-mono text-on-surface-variant uppercase tracking-widest">Total Reuses</div>
+                    </div>
+                    <div class="text-center group">
+                        <div class="font-headline-lg text-headline-lg text-primary-container group-hover:scale-110 transition-transform duration-500">10+</div>
+                        <div class="font-label-mono text-label-mono text-on-surface-variant uppercase tracking-widest">Active Missions</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-24 relative bg-background" id="missions">
+            <div class="max-w-container-max mx-auto px-gutter">
+                <div class="mb-16">
+                    <h2 class="font-headline-lg text-headline-lg text-primary mb-4">Featured Missions</h2>
+                    <div class="w-20 h-1 bg-primary-container rounded-full"></div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-6 h-auto md:h-[600px]">
+                    <div class="md:col-span-8 group relative rounded-2xl overflow-hidden glass border-primary/20 cursor-pointer">
+                        <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110" data-alt="Spacecraft orbiting blue Earth at sunset." style="background-image: url('assets/images/mission-artemis.jpg')"></div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent opacity-80"></div>
+                        <div class="absolute bottom-0 left-0 p-8 w-full">
+                            <span class="inline-block px-3 py-1 rounded-full bg-primary/20 text-primary text-xs font-bold mb-4 backdrop-blur-md border border-primary/30">LATEST MISSION</span>
+                            <h3 class="font-headline-md text-headline-md text-white mb-2">Artemis III: Lunar Return</h3>
+                            <p class="text-on-surface-variant max-w-lg">Sending humans back to the lunar surface for the first time in over 50 years to establish a long-term presence.</p>
+                        </div>
+                    </div>
+                    <div class="md:col-span-4 flex flex-col gap-6">
+                        <div class="h-1/2 group relative rounded-2xl overflow-hidden glass border-primary/20 cursor-pointer">
+                            <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110" data-alt="Space probe approaching Mars." style="background-image: url('assets/images/mission-mars.jpg')"></div>
+                            <div class="absolute inset-0 bg-gradient-to-t from-background/90 to-transparent"></div>
+                            <div class="absolute bottom-0 left-0 p-6">
+                                <h3 class="font-headline-md text-headline-md text-sm text-white font-bold mb-1">Mars Surveyor 2</h3>
+                                <p class="text-on-surface-variant text-xs">High-res orbital mapping of the Jezero Crater.</p>
+                            </div>
+                        </div>
+                        <div class="h-1/2 group relative rounded-2xl overflow-hidden glass border-primary/20 cursor-pointer">
+                            <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110" data-alt="Modern space station module module." style="background-image: url('assets/images/mission-station.jpg')"></div>
+                            <div class="absolute inset-0 bg-gradient-to-t from-background/90 to-transparent"></div>
+                            <div class="absolute bottom-0 left-0 p-6">
+                                <h3 class="font-headline-md text-headline-md text-sm text-white font-bold mb-1">Station Alpha Resupply</h3>
+                                <p class="text-on-surface-variant text-xs">Autonomous cargo docking and crew rotations.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-24 bg-surface-container-low" id="rockets">
+            <div class="max-w-container-max mx-auto px-gutter">
+                <div class="mb-16">
+                    <h2 class="font-headline-lg text-headline-lg text-primary mb-4">Rockets Catalog</h2>
+                    <p class="text-on-surface-variant max-w-xl">Explore the heavy-lift vehicles and versatile launchers currently powering the next generation of space travel.</p>
+                </div>
+                <div class="hidden text-center mb-6" id="rockets-loading"></div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="rockets-grid">
+                    </div>
+            </div>
+        </section>
+
+        <section class="py-24 relative overflow-hidden" id="tech">
+            <div class="absolute top-0 right-0 w-1/3 h-full bg-primary/5 blur-[120px] rounded-full -translate-y-1/2 translate-x-1/2"></div>
+            <div class="max-w-container-max mx-auto px-gutter">
+                <div class="text-center mb-16">
+                    <h2 class="font-headline-lg text-headline-lg text-primary mb-4">Core Technology</h2>
+                    <p class="text-on-surface-variant max-w-2xl mx-auto">Propulsion and habitat systems designed for extreme endurance and safety in the harshest environments known to man.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="glass p-8 rounded-2xl border-primary/10 hover:border-primary/40 transition-all duration-500 group">
+                        <div class="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mb-6 group-hover:bg-primary-container group-hover:text-on-primary-container transition-all duration-500">
+                            <span class="material-symbols-outlined text-3xl">phonelink_lock</span>
+                        </div>
+                        <h3 class="font-headline-md text-headline-md text-xl text-white mb-4">Ion Propulsion</h3>
+                        <p class="text-on-surface-variant mb-6">High-efficiency electric propulsion systems for deep-space missions where fuel weight is a critical constraint.</p>
+                        <ul class="space-y-3">
+                            <li class="flex items-center gap-2 text-sm text-primary-container">
+                                <span class="material-symbols-outlined text-sm">check_circle</span>90% higher fuel efficiency
                             </li>
-<li class="flex items-center gap-2 text-sm text-primary-container">
-<span class="material-symbols-outlined text-sm">check_circle</span>
-                                Multi-year continuous operation
+                            <li class="flex items-center gap-2 text-sm text-primary-container">
+                                <span class="material-symbols-outlined text-sm">check_circle</span>Multi-year continuous operation
                             </li>
-</ul>
-</div>
-<!-- Tech Card 2 -->
-<div class="glass p-8 rounded-2xl border-primary/10 hover:border-primary/40 transition-all duration-500 group">
-<div class="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mb-6 group-hover:bg-primary-container group-hover:text-on-primary-container transition-all duration-500">
-<span class="material-symbols-outlined text-3xl">shield</span>
-</div>
-<h3 class="font-headline-md text-headline-md text-xl text-white mb-4">Adaptive Heat Shields</h3>
-<p class="text-on-surface-variant mb-6">Ceramic-composite weave technology that withstands re-entry temperatures exceeding 2,500°C.</p>
-<ul class="space-y-3">
-<li class="flex items-center gap-2 text-sm text-primary-container">
-<span class="material-symbols-outlined text-sm">check_circle</span>
-                                Reusable for 10+ entries
+                        </ul>
+                    </div>
+                    <div class="glass p-8 rounded-2xl border-primary/10 hover:border-primary/40 transition-all duration-500 group">
+                        <div class="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mb-6 group-hover:bg-primary-container group-hover:text-on-primary-container transition-all duration-500">
+                            <span class="material-symbols-outlined text-3xl">shield</span>
+                        </div>
+                        <h3 class="font-headline-md text-headline-md text-xl text-white mb-4">Adaptive Heat Shields</h3>
+                        <p class="text-on-surface-variant mb-6">Ceramic-composite weave technology that withstands re-entry temperatures exceeding 2,500°C.</p>
+                        <ul class="space-y-3">
+                            <li class="flex items-center gap-2 text-sm text-primary-container">
+                                <span class="material-symbols-outlined text-sm">check_circle</span>Reusable for 10+ entries
                             </li>
-<li class="flex items-center gap-2 text-sm text-primary-container">
-<span class="material-symbols-outlined text-sm">check_circle</span>
-                                Intelligent thermal monitoring
+                            <li class="flex items-center gap-2 text-sm text-primary-container">
+                                <span class="material-symbols-outlined text-sm">check_circle</span>Intelligent thermal monitoring
                             </li>
-</ul>
-</div>
-<!-- Tech Card 3 -->
-<div class="glass p-8 rounded-2xl border-primary/10 hover:border-primary/40 transition-all duration-500 group">
-<div class="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mb-6 group-hover:bg-primary-container group-hover:text-on-primary-container transition-all duration-500">
-<span class="material-symbols-outlined text-3xl">smart_toy</span>
-</div>
-<h3 class="font-headline-md text-headline-md text-xl text-white mb-4">AI Navigation</h3>
-<p class="text-on-surface-variant mb-6">Fully autonomous orbital maneuvering and docking systems requiring zero intervention from ground control.</p>
-<ul class="space-y-3">
-<li class="flex items-center gap-2 text-sm text-primary-container">
-<span class="material-symbols-outlined text-sm">check_circle</span>
-                                Real-time obstacle avoidance
+                        </ul>
+                    </div>
+                    <div class="glass p-8 rounded-2xl border-primary/10 hover:border-primary/40 transition-all duration-500 group">
+                        <div class="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mb-6 group-hover:bg-primary-container group-hover:text-on-primary-container transition-all duration-500">
+                            <span class="material-symbols-outlined text-3xl">smart_toy</span>
+                        </div>
+                        <h3 class="font-headline-md text-headline-md text-xl text-white mb-4">AI Navigation</h3>
+                        <p class="text-on-surface-variant mb-6">Fully autonomous orbital maneuvering and docking systems requiring zero intervention from ground control.</p>
+                        <ul class="space-y-3">
+                            <li class="flex items-center gap-2 text-sm text-primary-container">
+                                <span class="material-symbols-outlined text-sm">check_circle</span>Real-time obstacle avoidance
                             </li>
-<li class="flex items-center gap-2 text-sm text-primary-container">
-<span class="material-symbols-outlined text-sm">check_circle</span>
-                                Precise millimetric docking
+                            <li class="flex items-center gap-2 text-sm text-primary-container">
+                                <span class="material-symbols-outlined text-sm">check_circle</span>Precise millimetric docking
                             </li>
-</ul>
-</div>
-</div>
-</div>
-</section>
-<!-- CTA Section -->
-<section class="py-24 bg-gradient-to-r from-primary-container/10 to-secondary-container/10">
-<div class="max-w-container-max mx-auto px-gutter text-center">
-<h2 class="font-headline-lg text-headline-lg text-white mb-6">Ready for Departure?</h2>
-<p class="text-on-surface-variant max-w-xl mx-auto mb-10">Join the thousands of engineers, scientists, and explorers pushing the boundaries of what's possible.</p>
-<div class="flex flex-col sm:flex-row gap-4 justify-center">
-<form class="glass px-6 py-4 rounded-xl flex items-center gap-3" id="subscribe-form">
-<input class="bg-transparent border-none focus:ring-0 text-white w-full sm:w-64" id="subscribe-email" placeholder="Enter your email" required="" type="email"/>
-<button class="bg-primary-container text-on-primary-container px-6 py-2 rounded-lg font-bold hover:glow-primary transition-all active:scale-95 whitespace-nowrap" type="submit">Subscribe</button>
-</form>
-</div>
-<p class="mt-4 text-sm font-bold text-primary-container hidden" id="subscribe-message" role="status"></p>
-</div>
-</section>
-</main>
-<!-- Scroll to Top Button -->
-<button class="fixed bottom-10 right-10 z-50 w-14 h-14 glass rounded-full flex items-center justify-center text-primary-container border-primary/40 translate-y-24 transition-all duration-500 hover:scale-110 active:scale-90" id="scroll-to-top">
-<span class="material-symbols-outlined">arrow_upward</span>
-</button>
-<!-- Footer -->
-<footer class="bg-surface-container-lowest dark:bg-surface-container-lowest w-full py-12 border-t border-outline-variant/20">
-<div class="max-w-container-max mx-auto px-margin-desktop flex flex-col md:flex-row justify-between items-center gap-8">
-<div class="flex flex-col items-center md:items-start gap-4">
-<a class="font-headline-md text-headline-md font-bold text-primary" href="#">Orbit</a>
-<p class="text-on-surface-variant font-label-mono text-label-mono max-w-xs text-center md:text-left">© 2024 Orbit Space Exploration. Ad Astra Per Aspera.</p>
-</div>
-<div class="flex flex-wrap justify-center gap-8">
-<div class="flex flex-col gap-3 items-center md:items-start">
-<span class="text-primary font-bold uppercase text-xs tracking-widest">Explore</span>
-<a class="text-on-surface-variant hover:text-primary transition-colors font-body-md" href="#missions">Missions</a>
-<a class="text-on-surface-variant hover:text-primary transition-colors font-body-md" href="#rockets">Rockets</a>
-</div>
-<div class="flex flex-col gap-3 items-center md:items-start">
-<span class="text-primary font-bold uppercase text-xs tracking-widest">Resources</span>
-<a class="text-on-surface-variant hover:text-primary transition-colors font-body-md" href="#">Telemetry</a>
-<a class="text-on-surface-variant hover:text-primary transition-colors font-body-md" href="#">Privacy Policy</a>
-</div>
-<div class="flex flex-col gap-3 items-center md:items-start">
-<span class="text-primary font-bold uppercase text-xs tracking-widest">Connect</span>
-<div class="flex gap-4">
-<a class="text-on-surface-variant hover:text-primary transition-colors" href="#"><span class="material-symbols-outlined">public</span></a>
-<a class="text-on-surface-variant hover:text-primary transition-colors" href="#"><span class="material-symbols-outlined">mail</span></a>
-<a class="text-on-surface-variant hover:text-primary transition-colors" href="#"><span class="material-symbols-outlined">terminal</span></a>
-</div>
-</div>
-</div>
-</div>
-</footer>
-<script src="app.js" defer></script>
-</body></html>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-24 bg-gradient-to-r from-primary-container/10 to-secondary-container/10">
+            <div class="max-w-container-max mx-auto px-gutter text-center">
+                <h2 class="font-headline-lg text-headline-lg text-white mb-6">Ready for Departure?</h2>
+                <p class="text-on-surface-variant max-w-xl mx-auto mb-10">Join the thousands of engineers, scientists, and explorers pushing the boundaries of what's possible.</p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <form class="glass px-6 py-4 rounded-xl flex items-center gap-3" id="subscribe-form">
+                        <input class="bg-transparent border-none focus:ring-0 text-white w-full sm:w-64" id="subscribe-email" placeholder="Enter your email" required="" type="email"/>
+                        <button class="bg-primary-container text-on-primary-container px-6 py-2 rounded-lg font-bold hover:glow-primary transition-all active:scale-95 whitespace-nowrap" type="submit">Subscribe</button>
+                    </form>
+                </div>
+                <p class="mt-4 text-sm font-bold text-primary-container hidden" id="subscribe-message" role="status"></p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-surface-container-lowest dark:bg-surface-container-lowest w-full py-12 border-t border-outline-variant/20">
+        <div class="max-w-container-max mx-auto px-margin-desktop flex flex-col md:flex-row justify-between items-center gap-8">
+            <div class="flex flex-col items-center md:items-start gap-4">
+                <a class="font-headline-md text-headline-md font-bold text-primary" href="#">Orbit</a>
+                <p class="text-on-surface-variant font-label-mono text-label-mono max-w-xs text-center md:text-left">© 2024 Orbit Space Exploration. Ad Astra Per Aspera.</p>
+            </div>
+            <div class="flex flex-wrap justify-center gap-8">
+                <div class="flex flex-col gap-3 items-center md:items-start">
+                    <span class="text-primary font-bold uppercase text-xs tracking-widest">Explore</span>
+                    <a class="text-on-surface-variant hover:text-primary transition-colors font-body-md" href="#missions">Missions</a>
+                    <a class="text-on-surface-variant hover:text-primary transition-colors font-body-md" href="#rockets">Rockets</a>
+                </div>
+                <div class="flex flex-col gap-3 items-center md:items-start">
+                    <span class="text-primary font-bold uppercase text-xs tracking-widest">Resources</span>
+                    <a class="text-on-surface-variant hover:text-primary transition-colors font-body-md" href="#">Telemetry</a>
+                    <a class="text-on-surface-variant hover:text-primary transition-colors font-body-md" href="#">Privacy Policy</a>
+                </div>
+                <div class="flex flex-col gap-3 items-center md:items-start">
+                    <span class="text-primary font-bold uppercase text-xs tracking-widest">Connect</span>
+                    <div class="flex gap-4">
+                        <a class="text-on-surface-variant hover:text-primary transition-colors" href="#"><span class="material-symbols-outlined">public</span></a>
+                        <a class="text-on-surface-variant hover:text-primary transition-colors" href="#"><span class="material-symbols-outlined">mail</span></a>
+                        <a class="text-on-surface-variant hover:text-primary transition-colors" href="#"><span class="material-symbols-outlined">terminal</span></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <div class="fixed inset-0 z-[100] flex items-center justify-center bg-background/80 backdrop-blur-md hidden" id="welcome-modal">
+        <div class="glass p-8 rounded-xl max-w-md w-full mx-4 text-center border-primary/20 shadow-2xl">
+            <h2 class="font-headline-md text-headline-md text-primary mb-4">Welcome to Orbit</h2>
+            <p class="font-body-md text-on-surface-variant mb-8">Explore the Future of Space Technology and the vastness of the cosmos through our high-fidelity mission tracking system.</p>
+            <button class="w-full bg-primary-container text-on-primary-container py-3 rounded-lg font-bold hover:scale-[1.02] transition-transform active:scale-95 glow-primary" id="close-modal">
+                Accept
+            </button>
+        </div>
+    </div>
+
+    <div class="fixed inset-0 z-[100] flex items-center justify-center bg-background/80 backdrop-blur-md hidden p-4" id="telemetry-modal">
+        <div class="glass p-8 rounded-xl max-w-lg w-full mx-4 border-primary/20 shadow-2xl max-h-[85vh] overflow-y-auto custom-scrollbar">
+            <div class="flex justify-between items-start mb-6">
+                <h2 class="font-headline-md text-headline-md text-primary" id="telemetry-title">Rocket Telemetry</h2>
+                <button class="text-on-surface-variant hover:text-primary transition-colors" id="close-telemetry">
+                    <span class="material-symbols-outlined text-3xl">close</span>
+                </button>
+            </div>
+            <div id="telemetry-content">
+                </div>
+        </div>
+    </div>
+
+    <button class="fixed bottom-10 right-10 z-50 w-14 h-14 glass rounded-full flex items-center justify-center text-primary-container border-primary/40 translate-y-24 transition-all duration-500 hover:scale-110 active:scale-90" id="scroll-to-top">
+        <span class="material-symbols-outlined">arrow_upward</span>
+    </button>
+
+    <script src="app.js" defer></script>
+</body>
+</html> 
