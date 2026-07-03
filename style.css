@@ -1,0 +1,104 @@
+/* Orbit — custom styles
+   Base theme, glass/glow effects, and fine-grained responsive rules.
+   Tailwind's design tokens (colors, spacing, fonts) are configured separately
+   in index.html via the Tailwind CDN config, since that's JS configuration,
+   not plain CSS. Everything below is hand-written CSS. */
+
+        body {
+            background-color: #05070A;
+            color: #e1e2eb;
+            overflow-x: hidden;
+        }
+        
+        .glass {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(24px);
+            border: 1px solid rgba(0, 240, 255, 0.15);
+        }
+
+        .glow-primary {
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.3);
+        }
+
+        .glow-hover:hover {
+            box-shadow: 0 0 25px rgba(0, 240, 255, 0.5);
+            transform: translateY(-2px);
+        }
+
+        .neon-text-primary {
+            text-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
+        }
+
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #0b0e14;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #00f0ff;
+            border-radius: 10px;
+        }
+
+        @keyframes pulse-breath {
+            0%, 100% { opacity: 0.8; }
+            50% { opacity: 1; }
+        }
+        .animate-breath {
+            animation: pulse-breath 3s ease-in-out infinite;
+        }
+
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        /* ---- Fine-grained responsive tuning ---- */
+        /* Tablet (768px): tighten side margins */
+        @media (max-width: 768px) {
+            .px-gutter { padding-left: 20px; padding-right: 20px; }
+        }
+
+        /* Small phones (480px): scale down display text, stack bento grid */
+        @media (max-width: 480px) {
+            .font-display-lg, .text-display-lg {
+                font-size: 40px !important;
+                line-height: 48px !important;
+            }
+            .font-headline-lg, .text-headline-lg {
+                font-size: 28px !important;
+                line-height: 34px !important;
+            }
+            #missions .grid.md\:grid-cols-12 {
+                height: auto !important;
+            }
+            #missions .md\:col-span-8,
+            #missions .md\:col-span-4 {
+                height: 260px;
+            }
+        }
+
+        /* Very small phones (320px): further compress spacing & type */
+        @media (max-width: 320px) {
+            .font-display-lg, .text-display-lg {
+                font-size: 32px !important;
+                line-height: 38px !important;
+            }
+            .font-headline-lg, .text-headline-lg {
+                font-size: 24px !important;
+                line-height: 30px !important;
+            }
+            .px-gutter { padding-left: 14px; padding-right: 14px; }
+            #stats .grid-cols-2 {
+                gap: 16px !important;
+            }
+            .max-w-container-max { padding-left: 12px; padding-right: 12px; }
+        }
