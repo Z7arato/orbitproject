@@ -116,6 +116,20 @@
             </button>
 </div>
 </div>
+<!-- Telemetry Modal -->
+<div class="fixed inset-0 z-[100] flex items-center justify-center bg-background/80 backdrop-blur-md hidden p-4" id="telemetry-modal">
+<div class="glass p-8 rounded-xl max-w-lg w-full mx-4 border-primary/20 shadow-2xl max-h-[85vh] overflow-y-auto custom-scrollbar">
+<div class="flex justify-between items-start mb-6">
+<h2 class="font-headline-md text-headline-md text-primary" id="telemetry-title">Rocket Telemetry</h2>
+<button class="text-on-surface-variant hover:text-primary transition-colors" id="close-telemetry">
+<span class="material-symbols-outlined text-3xl">close</span>
+</button>
+</div>
+<div id="telemetry-content">
+<!-- Populated by app.js -->
+</div>
+</div>
+</div>
 <!-- Header / TopNavBar -->
 <header class="fixed top-0 w-full z-50 transition-all duration-500 border-b border-primary/10" id="top-nav">
 <div class="flex justify-between items-center px-gutter py-4 max-w-container-max mx-auto">
@@ -123,25 +137,14 @@
 <a class="font-headline-md text-headline-md font-bold tracking-tighter text-primary dark:text-primary-fixed" href="#">Orbit</a>
 <!-- Desktop Nav -->
 <nav class="hidden lg:flex items-center gap-6">
-<a class="text-primary dark:text-primary-fixed border-b-2 border-primary pb-1 font-body-md" href="#hero">Home</a>
-<a class="text-on-surface-variant hover:text-primary transition-colors font-body-md" href="#missions">Missions</a>
-<a class="text-on-surface-variant hover:text-primary transition-colors font-body-md" href="#rockets">Rockets</a>
-<a class="text-on-surface-variant hover:text-primary transition-colors font-body-md" href="#tech">Technology</a>
-<!-- Dropdown -->
-<div class="relative group">
-<button class="flex items-center gap-1 text-on-surface-variant hover:text-primary transition-colors font-body-md">
-                            Mission Types <span class="material-symbols-outlined text-sm">expand_more</span>
-</button>
-<div class="absolute top-full left-0 mt-2 w-48 glass rounded-lg py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300">
-<a class="block px-4 py-2 hover:bg-primary/10 transition-colors" href="#">Commercial</a>
-<a class="block px-4 py-2 hover:bg-primary/10 transition-colors" href="#">Scientific</a>
-<a class="block px-4 py-2 hover:bg-primary/10 transition-colors" href="#">Exploration</a>
-</div>
-</div>
+<a class="nav-link text-on-surface-variant hover:text-primary transition-colors font-body-md pb-1 border-b-2 border-transparent" data-nav-link href="#hero">Home</a>
+<a class="nav-link text-on-surface-variant hover:text-primary transition-colors font-body-md pb-1 border-b-2 border-transparent" data-nav-link href="#missions">Missions</a>
+<a class="nav-link text-on-surface-variant hover:text-primary transition-colors font-body-md pb-1 border-b-2 border-transparent" data-nav-link href="#rockets">Rockets</a>
+<a class="nav-link text-on-surface-variant hover:text-primary transition-colors font-body-md pb-1 border-b-2 border-transparent" data-nav-link href="#tech">Technology</a>
 </nav>
 </div>
 <div class="flex items-center gap-4">
-<button class="hidden md:block bg-primary-container text-on-primary-container px-6 py-2 rounded-full font-bold hover:scale-105 transition-all duration-300 glow-primary active:scale-95">
+<button class="hidden md:block bg-primary-container text-on-primary-container px-6 py-2 rounded-full font-bold hover:scale-105 transition-all duration-300 glow-primary active:scale-95" id="launch-portal-btn">
                     Launch Portal
                 </button>
 <button class="lg:hidden text-primary" id="mobile-menu-toggle">
@@ -149,20 +152,21 @@
 </button>
 </div>
 </div>
-<!-- Mobile Menu -->
-<div class="lg:hidden fixed inset-0 top-[72px] bg-background/95 backdrop-blur-xl translate-x-full transition-transform duration-300 z-40" id="mobile-menu">
+</header>
+<!-- Mobile Menu (kept outside <header> so it isn't nested inside another
+     backdrop-blur element — nested backdrop-filter causes a transparent
+     rendering bug on scroll in mobile Safari/Chrome) -->
+<div class="lg:hidden fixed inset-0 translate-x-full transition-transform duration-300 z-40" id="mobile-menu" style="top:72px; background:#10131a;">
 <nav class="flex flex-col items-center gap-8 py-12">
-<a class="text-2xl font-headline-md text-primary" href="#hero">Home</a>
-<a class="text-2xl font-headline-md" href="#missions">Missions</a>
-<a class="text-2xl font-headline-md" href="#rockets">Rockets</a>
-<a class="text-2xl font-headline-md" href="#tech">Technology</a>
-<a class="text-2xl font-headline-md" href="#">Mission Types</a>
-<button class="mt-4 bg-primary-container text-on-primary-container px-10 py-4 rounded-full font-bold text-xl">
+<a class="nav-link-mobile text-2xl font-headline-md" data-nav-link href="#hero">Home</a>
+<a class="nav-link-mobile text-2xl font-headline-md" data-nav-link href="#missions">Missions</a>
+<a class="nav-link-mobile text-2xl font-headline-md" data-nav-link href="#rockets">Rockets</a>
+<a class="nav-link-mobile text-2xl font-headline-md" data-nav-link href="#tech">Technology</a>
+<button class="mt-4 bg-primary-container text-on-primary-container px-10 py-4 rounded-full font-bold text-xl" id="launch-portal-btn-mobile">
                     Launch Portal
                 </button>
 </nav>
 </div>
-</header>
 <main>
 <!-- Hero Section -->
 <section class="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden" id="hero">
@@ -180,10 +184,10 @@
                     Orbit is your gateway to the next frontier. Witness the engineering marvels and legendary journeys that bridge the gap between Earth and the stars.
                 </p>
 <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-<button class="w-full sm:w-auto bg-primary-container text-on-primary-container px-10 py-4 rounded-full font-bold text-lg hover:scale-105 transition-all glow-primary">
+<button class="w-full sm:w-auto bg-primary-container text-on-primary-container px-10 py-4 rounded-full font-bold text-lg hover:scale-105 transition-all glow-primary" id="start-journey-btn">
                         Start Journey
                     </button>
-<button class="w-full sm:w-auto border border-primary/40 px-10 py-4 rounded-full font-bold text-lg text-primary backdrop-blur-sm hover:bg-primary/5 transition-all">
+<button class="w-full sm:w-auto border border-primary/40 px-10 py-4 rounded-full font-bold text-lg text-primary backdrop-blur-sm hover:bg-primary/5 transition-all" id="view-missions-btn">
                         View Missions
                     </button>
 </div>
@@ -259,23 +263,14 @@
 <!-- Rockets Catalog Section -->
 <section class="py-24 bg-surface-container-low" id="rockets">
 <div class="max-w-container-max mx-auto px-gutter">
-<div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
-<div>
+<div class="mb-16">
 <h2 class="font-headline-lg text-headline-lg text-primary mb-4">Rockets Catalog</h2>
 <p class="text-on-surface-variant max-w-xl">Explore the heavy-lift vehicles and versatile launchers currently powering the next generation of space travel.</p>
 </div>
-<div class="bg-surface p-1 rounded-full border border-outline-variant flex">
-<button class="px-6 py-2 bg-primary-container text-on-primary-container rounded-full font-bold text-sm">Active</button>
-<button class="px-6 py-2 text-on-surface-variant font-bold text-sm hover:text-primary transition-colors">History</button>
-</div>
-</div>
-<!-- Loading State -->
-<div class="flex flex-col items-center justify-center py-24 gap-4" id="rockets-loading">
-<div class="w-12 h-12 border-4 border-primary-container border-t-transparent rounded-full animate-spin"></div>
-<p class="font-label-mono text-label-mono text-primary uppercase animate-pulse">Initializing Data Stream...</p>
-</div>
-<!-- Rockets Grid -->
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 hidden" id="rockets-grid">
+<!-- Error / fallback banner (hidden unless the live request fails) -->
+<div class="hidden text-center mb-6" id="rockets-loading"></div>
+<!-- Rockets Grid (populated with skeleton placeholder cards first, then swapped for real cards) -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="rockets-grid">
 <!-- Cards will be injected here -->
 </div>
 </div>
@@ -352,11 +347,12 @@
 <h2 class="font-headline-lg text-headline-lg text-white mb-6">Ready for Departure?</h2>
 <p class="text-on-surface-variant max-w-xl mx-auto mb-10">Join the thousands of engineers, scientists, and explorers pushing the boundaries of what's possible.</p>
 <div class="flex flex-col sm:flex-row gap-4 justify-center">
-<div class="glass px-6 py-4 rounded-xl flex items-center gap-3">
-<input class="bg-transparent border-none focus:ring-0 text-white w-full sm:w-64" placeholder="Enter your email" type="email"/>
-<button class="bg-primary-container text-on-primary-container px-6 py-2 rounded-lg font-bold hover:glow-primary transition-all active:scale-95 whitespace-nowrap">Subscribe</button>
+<form class="glass px-6 py-4 rounded-xl flex items-center gap-3" id="subscribe-form">
+<input class="bg-transparent border-none focus:ring-0 text-white w-full sm:w-64" id="subscribe-email" placeholder="Enter your email" required="" type="email"/>
+<button class="bg-primary-container text-on-primary-container px-6 py-2 rounded-lg font-bold hover:glow-primary transition-all active:scale-95 whitespace-nowrap" type="submit">Subscribe</button>
+</form>
 </div>
-</div>
+<p class="mt-4 text-sm font-bold text-primary-container hidden" id="subscribe-message" role="status"></p>
 </div>
 </section>
 </main>
@@ -374,8 +370,8 @@
 <div class="flex flex-wrap justify-center gap-8">
 <div class="flex flex-col gap-3 items-center md:items-start">
 <span class="text-primary font-bold uppercase text-xs tracking-widest">Explore</span>
-<a class="text-on-surface-variant hover:text-primary transition-colors font-body-md" href="#">Missions</a>
-<a class="text-on-surface-variant hover:text-primary transition-colors font-body-md" href="#">Rockets</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-body-md" href="#missions">Missions</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-body-md" href="#rockets">Rockets</a>
 </div>
 <div class="flex flex-col gap-3 items-center md:items-start">
 <span class="text-primary font-bold uppercase text-xs tracking-widest">Resources</span>
